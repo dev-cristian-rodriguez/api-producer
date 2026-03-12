@@ -178,3 +178,25 @@ api-producer/
 ├── compose.yaml         # Docker Compose (MySQL + Adminer + App)
 └── pom.xml
 ```
+
+## Colas RabbitMQ
+
+| Cola | Descripcion |
+|------|-------------|
+| `messaging.queue` | Cola principal donde se publican los mensajes |
+| `messaging.retry.queue` | Cola de reintentos con TTL de 5 segundos |
+| `messaging.dlq.queue` | Dead Letter Queue para mensajes fallidos |
+
+## Observabilidad
+
+```bash
+# Health check
+curl http://localhost:8080/actuator/health
+
+# Metricas Prometheus
+curl http://localhost:8080/actuator/prometheus
+```
+
+Metricas personalizadas:
+- `messages.published` - Total de mensajes publicados a RabbitMQ
+- `messages.rejected` - Total de mensajes rechazados por origen invalido
