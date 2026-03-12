@@ -4,17 +4,17 @@ services:
     image: mysql:8.0
     container_name: api-producer-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: messaging_db
-      MYSQL_USER: messaging_user
-      MYSQL_PASSWORD: messaging_pass
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./init-db/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot_password"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -38,14 +38,14 @@ services:
     environment:
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306
-      MYSQL_DATABASE: messaging_db
-      MYSQL_USER: messaging_user
-      MYSQL_PASSWORD: messaging_pass
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       RABBITMQ_HOST: host.docker.internal
       RABBITMQ_PORT: 5672
-      RABBITMQ_USER: guest
-      RABBITMQ_PASSWORD: guest
-      API_KEY: ${API_KEY:-my-secret-api-key-2025}
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      API_KEY: ${API_KEY}
     depends_on:
       mysql:
         condition: service_healthy

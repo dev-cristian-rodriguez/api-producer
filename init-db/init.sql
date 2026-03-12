@@ -16,6 +16,5 @@ INSERT INTO origins (phone_number, description, active) VALUES
     ('+573007779999', 'Origin Line 4 - Support', true),
     ('+573002468135', 'Origin Line 5 - Notifications', true);
 
-CREATE USER IF NOT EXISTS 'messaging_user'@'%' IDENTIFIED BY 'messaging_pass';
-GRANT ALL PRIVILEGES ON messaging_db.* TO 'messaging_user'@'%';
-FLUSH PRIVILEGES;
+-- User creation is handled by MYSQL_USER and MYSQL_PASSWORD environment variables in Docker Compose.
+-- MySQL Docker image automatically creates the user and grants privileges on MYSQL_DATABASE.
